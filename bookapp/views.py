@@ -3,13 +3,6 @@ from rest_framework import generics,status
 from .serializers import *
 from .models import *
 # Create your views here.
-# class Bookcreateview(generics.ListCreateAPIView):
-#     queryset = Book.objects.all()
-#     serializer_class = BookSerializer
-#
-# class Bookdetails(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Book.objects.all()
-#     serializer_class = BookSerializer
 
 class Categoyycreateview(generics.ListCreateAPIView):
     queryset = Category.objects.all()
