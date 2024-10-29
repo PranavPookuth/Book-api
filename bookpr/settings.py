@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+from django.conf.global_settings import AUTH_USER_MODEL
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -72,6 +74,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bookpr.wsgi.application'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'praveen.codeedex@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'fbmq ueku gkav mygc'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -136,3 +144,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# AUTH_USER_MODEL='users.User'
+
+AUTHENTICATION_BACKENDS = (
+    'bookapp.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
