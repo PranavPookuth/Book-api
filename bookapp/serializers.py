@@ -98,6 +98,7 @@ class LoginSerializer(serializers.Serializer):
         # Store the user in the validated data for later use
         data['user'] = user
         return data
+    
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -125,3 +126,33 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
+
+
+User = get_user_model()
+
+
+class PasswordResetSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class PassOTPVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField(min_length=4)
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    new_password = serializers.CharField(write_only=True)
+    confirm_new_password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        email = data.get('email')
+        new_password = data.get('new_password')
+        confirm_new_password = data.get('confirm_new_password')
+
+        if new_password != confirm_new_password:
+            raise serializers.ValidationError("New password and confirm new password do not match.")
+
+        return data
+
+

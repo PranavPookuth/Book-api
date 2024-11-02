@@ -1,3 +1,4 @@
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin, Group, Permission
 from django.db import models
 
@@ -89,5 +90,22 @@ class Order(models.Model):
 
     def __str__(self):
         return self.customer,self.book
+
+
+
+class PasswordResetUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True)
+    otp_secret_key = models.CharField(max_length=32, blank=True, null=True)
+    otp_created_at = models.DateTimeField(blank=True, null=True)
+    groups = models.ManyToManyField(Group, related_name='passwordresetuser_set', blank=True, verbose_name=('groups'))
+    user_permissions = models.ManyToManyField(Permission, related_name='passwordresetuser_set', blank=True,
+                                              verbose_name=('user permissions'))
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+
+
 
 
