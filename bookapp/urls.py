@@ -5,7 +5,7 @@ from .views import *
 
 
 urlpatterns = [
-
+jkj
     # login register logout
 
     path('register/', views.RegisterView.as_view(), name='user-register'),
